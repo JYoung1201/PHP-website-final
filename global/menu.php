@@ -6,7 +6,7 @@
             <li><a href="missions.php">Mission Statement</a></li>
             <li><a href="phpinfo.php">PHP Info</a></li>
             <li><a href="contact.php">Contact Us</a></li>
-
+            <li><a href="variablesnew.php">Organizational Chart</a></li>
 
             <li><a href="shop_cart.php">Catalogue</a></li>
             <li><a href="feedback.php">Customer Feedback</a></li>

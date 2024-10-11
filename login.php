@@ -1,6 +1,12 @@
 <?php
 session_start();
 
+// Check if the user is trying to access a page without being logged in
+if (!isset($_SESSION['user']) && isset($_SERVER['HTTP_REFERER'])) {
+    // Store the original page (where the user came from)
+    $_SESSION['redirect_to'] = $_SERVER['HTTP_REFERER'];
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Predefined usernames and passwords
     $credentials = [
@@ -17,13 +23,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['user'] = $username; // Set the user session
         $_SESSION['role'] = $username; // Store the role in session
 
-        // Redirect based on role
-        if ($username === 'admin') {
-            header('Location: admin_dashboard.php');
-        } elseif ($username === 'publisher') {
-            header('Location: publisher_dashboard.php');
-        } elseif ($username === 'customer') {
-            header('Location: customer_dashboard.php');
+        // Redirect to the original page, if any
+        if (isset($_SESSION['redirect_to'])) {
+            header('Location: ' . $_SESSION['redirect_to']);
+            unset($_SESSION['redirect_to']); // Clear the redirect session variable
+        } else {
+            // If no original page, redirect based on role
+            if ($username === 'admin') {
+                header('Location: admin_dashboard.php');
+            } elseif ($username === 'publisher') {
+                header('Location: publisher_dashboard.php');
+            } elseif ($username === 'customer') {
+                header('Location: customer_dashboard.php');
+            }
         }
         exit();
     } else {
@@ -31,6 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
+
 <?php include 'global/header.php'; ?>
 <?php include 'global/menu.php'; ?>
 
@@ -57,4 +70,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </form>
 </body>
 </html>
+
 <?php include 'global/footer.php'; ?>

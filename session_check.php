@@ -1,4 +1,4 @@
-//This code checks to see if the user is logged in and redirects them to the login if they are not
+<!-- This code checks to see if the user is logged in and redirects them to the login if they are not -->
 <?php
 function check_session() {
     session_start();
