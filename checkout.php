@@ -1,3 +1,7 @@
+<?php
+require_once 'global/auth.php'; // Ensures the user is logged in
+?>
+
 <?php include 'global/header.php'; ?>
 <?php include 'global/menu.php'; ?>
 <body>

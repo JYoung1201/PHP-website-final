@@ -48,6 +48,9 @@ if (isset($_GET['action'])) {
     exit();
 }
 
+require_once 'global/auth.php'; // Ensures the user is logged in
+
+
 include 'global/header.php';
 include 'global/menu.php';
 

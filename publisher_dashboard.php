@@ -1,14 +1,16 @@
 <?php
 session_start();
 
-// Check if the user is logged in and is a publisher
+// Check if the user is logged in and if their role is 'admin'
 if (!isset($_SESSION['user']) || $_SESSION['role'] !== 'publisher') {
+    // If not, redirect to the login page or display an error message
     header('Location: login.php');
-    exit();
+    exit(); // Stop further execution
 }
 
-// Publisher dashboard content
+
 ?>
+
 <?php include 'global/header.php'; ?>
 <?php include 'global/menu.php'; ?>
 
@@ -25,9 +27,8 @@ if (!isset($_SESSION['user']) || $_SESSION['role'] !== 'publisher') {
 
     <h2>Manage Your Publications</h2>
     <ul>
-        <li><a href="add_publication.php">Add New Publication</a></li>
-        <li><a href="view_publications.php">View Your Publications</a></li>
-        <li><a href="edit_publication.php">Edit Existing Publications</a></li>
+        <li><a href="newsletter.php">Edit the newsletter</a></li>
+        <li><a href="module3.php">Edit the organizational chart</a></li>
     </ul>
 
     <a href="logout.php">Logout</a>

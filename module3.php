@@ -1,11 +1,14 @@
-//This code updated the organizational chart
-
-
-
 <?php
-include 'session_check.php';
-check_session();
+require_once 'global/auth.php'; // Ensures the user is logged in
+require 'global/db.php'; // Connect to the database
+
+// Check if the user is an admin or publisher
+if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'publisher')) {
+    echo "<p>You do not have permission to access this page.</p>";
+    exit; // Stop execution if the user is not authorized
+}
 ?>
+
 <?php include 'global/header.php'; ?>
 <?php include 'global/menu.php'; ?>
 <body>

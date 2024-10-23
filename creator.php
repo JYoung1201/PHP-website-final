@@ -1,10 +1,14 @@
 <?php include 'global/header.php'; ?>
 <?php include 'global/menu.php'; ?>
 <body>
+
     <main class="content">
-        <p>Welcome to Breakthru Beverages very official unofficial website!</p>
-        
+        <?php
+            echo "<p>This website was created by John-young Waters. Contact jyhwaters@gmail.com to reach me!</p>";
+           
+        ?>
     </main>
     <?php include 'global/footer.php'; ?>
+
 </body>
 </html>

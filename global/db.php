@@ -3,9 +3,9 @@
 //this file connects site to database
 // Database connection parameters
 $host = 'pixie-db.jyoung1201.lol';
-$dbname = 'jyoung1201_lol';
-$username = 'jyoung1201_lol';
-$password = 'GGnNGqvY9FFWwHO@VsUBr'; 
+$dbname = 'redacted';
+$username = 'redacted';
+$password = 'redacted'; 
 
 try {
     // Create a new PDO instance

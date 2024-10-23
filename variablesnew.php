@@ -1,13 +1,13 @@
 <?php
-include 'session_check.php';
-check_session();
-?>
-<?php
+require_once 'global/auth.php'; // Ensures the user is logged in
 require 'global/db.php'; // Connect to the database
 
 // Initialize variables for form fields and error messages
 $name = $title = $comment = "";
 $nameErr = $titleErr = $commentErr = $successMsg = "";
+
+// Check if the user is an admin or publisher
+$isAdminOrPublisher = isset($_SESSION['role']) && ($_SESSION['role'] === 'admin' || $_SESSION['role'] === 'publisher');
 
 // Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -53,8 +53,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <?php include 'global/header.php'; ?>
 <?php include 'global/menu.php'; ?>
 
-
-
 <main class="content">
 
     <h3>Organizational Chart</h3>
@@ -72,43 +70,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <a href="profiles/michael_johnson.php">Michael Johnson</a>
         </li>
     </ul>
-    <form action="module3.php">
-        <button type="submit" class="btn">Update Organizational Chart</button>
-    </form>
 
-    <div class="container">
-    <h2 class="mt-5">Leave a Comment</h2>
-
-    <!-- Display success message -->
-    <?php if ($successMsg): ?>
-        <div class="alert alert-success" role="alert">
-            <?php echo $successMsg; ?>
-        </div>
+    <?php if ($isAdminOrPublisher): ?>
+        <form action="module3.php">
+            <button type="submit" class="btn">Update Organizational Chart</button>
+        </form>
+    <?php else: ?>
+        <p>You do not have permission to update the organizational chart.</p>
     <?php endif; ?>
 
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control <?php echo $nameErr ? 'is-invalid' : ''; ?>" id="name" name="name" value="<?php echo $name; ?>" required>
-            <div class="invalid-feedback"><?php echo $nameErr; ?></div>
-        </div>
+    <div class="container">
+        <h2 class="mt-5">Leave a Comment</h2>
 
-        <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" class="form-control <?php echo $titleErr ? 'is-invalid' : ''; ?>" id="title" name="title" value="<?php echo $title; ?>" required>
-            <div class="invalid-feedback"><?php echo $titleErr; ?></div>
-        </div>
+        <!-- Display success message -->
+        <?php if ($successMsg): ?>
+            <div class="alert alert-success" role="alert">
+                <?php echo $successMsg; ?>
+            </div>
+        <?php endif; ?>
 
-        <div class="form-group">
-            <label for="comment">Comment</label>
-            <textarea class="form-control <?php echo $commentErr ? 'is-invalid' : ''; ?>" id="comment" name="comment" rows="4" required><?php echo $comment; ?></textarea>
-            <div class="invalid-feedback"><?php echo $commentErr; ?></div>
-        </div>
+        <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control <?php echo $nameErr ? 'is-invalid' : ''; ?>" id="name" name="name" value="<?php echo $name; ?>" required>
+                <div class="invalid-feedback"><?php echo $nameErr; ?></div>
+            </div>
 
-        <button type="submit" class="btn">Submit</button>
-    </form>
-</div>
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control <?php echo $titleErr ? 'is-invalid' : ''; ?>" id="title" name="title" value="<?php echo $title; ?>" required>
+                <div class="invalid-feedback"><?php echo $titleErr; ?></div>
+            </div>
 
+            <div class="form-group">
+                <label for="comment">Comment</label>
+                <textarea class="form-control <?php echo $commentErr ? 'is-invalid' : ''; ?>" id="comment" name="comment" rows="4" required><?php echo $comment; ?></textarea>
+                <div class="invalid-feedback"><?php echo $commentErr; ?></div>
+            </div>
+
+            <button type="submit" class="btn">Submit</button>
+        </form>
+    </div>
 
     <?php
     // Query to fetch all comments from the database, sorted by most recent

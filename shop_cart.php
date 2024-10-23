@@ -1,6 +1,13 @@
 <?php
+
 session_start();
-require 'global/db.php'; // Make sure your database connection is included
+require 'global/db.php'; 
+
+if (!isset($_SESSION['user'])) {
+    // User is not logged in, redirect them to the login page
+    header('Location: login.php');
+    exit();
+}
 
 class ShoppingCart {
     private $items = []; // Array to hold cart items

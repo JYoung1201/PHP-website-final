@@ -1,14 +1,17 @@
 <?php
 session_start();
 
-// Check if the user is logged in and is an admin
+// Check if the user is logged in and if their role is 'admin'
 if (!isset($_SESSION['user']) || $_SESSION['role'] !== 'admin') {
+    // If not, redirect to the login page or display an error message
     header('Location: login.php');
-    exit();
+    exit(); // Stop further execution
 }
 
-// Admin dashboard content
+
 ?>
+
+
 <?php include 'global/header.php'; ?>
 <?php include 'global/menu.php'; ?>
 
@@ -22,6 +25,12 @@ if (!isset($_SESSION['user']) || $_SESSION['role'] !== 'admin') {
 <body>
     <h1>Welcome, Admin!</h1>
     <p>This is the admin dashboard.</p>
+    <h2>Manage Your Publications</h2>
+    <ul>
+        <li><a href="newsletter.php">Edit the newsletter</a></li>
+        <li><a href="module3.php">Edit the organizational chart</a></li>
+        <li><a href="edit_users.php">Add and delete roles from the database</a></li>
+    </ul>
     <a href="logout.php">Logout</a>
 </body>
 </html>
